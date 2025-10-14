@@ -19,9 +19,13 @@ class MainActivity : AppCompatActivity() {
 
         // Sample coffee data
         val coffeeList = listOf(
-            CoffeeItem("Espresso", "Strong black coffee", 2.50, R.drawable.ic_launcher_background),
-            CoffeeItem("Cappuccino", "Coffee with milk foam", 3.00, R.drawable.ic_launcher_background),
-            CoffeeItem("Latte", "Coffee with milk", 3.50, R.drawable.ic_launcher_background)
+            CoffeeItem("Espresso", "Strong black coffee", 2.50, R.drawable.espresso),
+            CoffeeItem("Cappuccino", "Coffee with milk foam", 3.00, R.drawable.cappuccino),
+            CoffeeItem("Latte", "Coffee with milk", 3.50, R.drawable.latte),
+            CoffeeItem("Americano", "Espresso with hot water", 2.75, R.drawable.americano),
+            CoffeeItem("Mocha", "Chocolate-flavored coffee", 3.80, R.drawable.mocha),
+            CoffeeItem("Macchiato", "Espresso with milk foam on top", 3.20, R.drawable.macchiato),
+            CoffeeItem("Flat White", "Velvety espresso with microfoam", 3.60, R.drawable.flatwhite),
         )
 
         coffeeAdapter = CoffeeAdapter(coffeeList)
