@@ -1,11 +1,15 @@
 package com.example.paobucks
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+
 
 class CoffeeAdapter(private val coffeeList: List<CoffeeItem>) :
     RecyclerView.Adapter<CoffeeAdapter.CoffeeViewHolder>() {
@@ -26,10 +30,26 @@ class CoffeeAdapter(private val coffeeList: List<CoffeeItem>) :
 
     override fun onBindViewHolder(holder: CoffeeViewHolder, position: Int) {
         val coffee = coffeeList[position]
+        val buttonAdd = holder.itemView.findViewById<Button>(R.id.buttonAddToCart)
         holder.imageCoffee.setImageResource(coffee.imageRes)
         holder.textName.text = coffee.name
         holder.textDescription.text = coffee.description
         holder.textPrice.text = "$${coffee.price}"
+
+        // Make the card clickable to open CoffeeDetailActivity
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, CoffeeDetailActivity::class.java)
+            intent.putExtra("name", coffee.name)
+            intent.putExtra("description", coffee.description)
+            intent.putExtra("price", coffee.price)
+            intent.putExtra("imageRes", coffee.imageRes)
+            context.startActivity(intent)
+        }
+        buttonAdd.setOnClickListener {
+            // Handle adding to cart
+            Toast.makeText(holder.itemView.context, "${coffee.name} added to cart!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount(): Int = coffeeList.size

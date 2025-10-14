@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8F0"
+    android:padding="16dp">
 
+    <!-- Dashboard / Welcome Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#FF6F00"
+        android:layout_marginBottom="12dp"
+        android:clipToPadding="false"
+        android:elevation="4dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to Paobucks!"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/textIntro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discover your favorite coffee and add it to your cart."
+            android:textSize="14sp"
+            android:textColor="#FFF3E0"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Coffee List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCoffee"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"/>
 </LinearLayout>
