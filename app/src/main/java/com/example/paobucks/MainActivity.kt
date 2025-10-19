@@ -1,9 +1,12 @@
 package com.example.paobucks
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.paobucks.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,9 +28,23 @@ class MainActivity : AppCompatActivity() {
             CoffeeItem("Americano", "Espresso with hot water", 2.75, R.drawable.americano),
             CoffeeItem("Mocha", "Chocolate-flavored coffee", 3.80, R.drawable.mocha),
             CoffeeItem("Macchiato", "Espresso with milk foam on top", 3.20, R.drawable.macchiato),
-            CoffeeItem("Flat White", "Velvety espresso with microfoam", 3.60, R.drawable.flatwhite),
+            CoffeeItem("Flat White", "Velvety espresso with microfoam", 3.60, R.drawable.flatwhite)
         )
 
+        // Bottom Navigation setup
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> true
+                R.id.nav_cart -> {
+                    startActivity(Intent(this, CartActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // RecyclerView Adapter
         coffeeAdapter = CoffeeAdapter(coffeeList)
         recyclerView.adapter = coffeeAdapter
     }
