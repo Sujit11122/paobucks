@@ -14,32 +14,27 @@ class CoffeeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coffee_detail)
 
-        // Get data from Intent
-        val name = intent.getStringExtra("name") ?: "Coffee"
-        val description = intent.getStringExtra("description") ?: "Description"
+
+        val name = intent.getStringExtra("name") ?: getString(R.string.sample_coffee_name)
+        val description = intent.getStringExtra("description") ?: getString(R.string.sample_coffee_description)
         val price = intent.getDoubleExtra("price", 0.0)
         val imageRes = intent.getIntExtra("imageRes", R.drawable.ic_launcher_background)
 
-        // Bind views
-        val imageCoffee = findViewById<ImageView>(R.id.imageCoffeeDetail)
-        val textName = findViewById<TextView>(R.id.textNameDetail)
-        val textDescription = findViewById<TextView>(R.id.textDescriptionDetail)
-        val textPrice = findViewById<TextView>(R.id.textPriceDetail)
-        val buttonBack = findViewById<ImageButton>(R.id.buttonBack)
-        val buttonAdd = findViewById<Button>(R.id.buttonAddToCartDetail)
 
-        // Set data
-        imageCoffee.setImageResource(imageRes)
-        textName.text = name
-        textDescription.text = description
-        textPrice.text = "$$price"
+        findViewById<ImageView>(R.id.imageCoffeeDetail).setImageResource(imageRes)
+        findViewById<TextView>(R.id.textNameDetail).text = name
+        findViewById<TextView>(R.id.textDescriptionDetail).text = description
+        findViewById<TextView>(R.id.textPriceDetail).text = getString(R.string.coffee_price_placeholder_format, price)
 
-        buttonBack.setOnClickListener {
-            finish()
-        }
+        val backBtn = findViewById<ImageButton>(R.id.buttonBack)
+        backBtn.setOnClickListener { finish() }
 
-        buttonAdd.setOnClickListener {
-            Toast.makeText(this, "$name added to cart!", Toast.LENGTH_SHORT).show()
+
+        val addToCartBtn = findViewById<Button>(R.id.buttonAddToCart)
+        addToCartBtn.setOnClickListener {
+            val coffee = CoffeeItem(name, description, price, imageRes)
+            CartManager.addItem(coffee)
+            Toast.makeText(this, getString(R.string.added_to_cart_message, name), Toast.LENGTH_SHORT).show()
         }
     }
 }

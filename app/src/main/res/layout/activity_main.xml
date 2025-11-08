@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFF8F0"
-    android:padding="16dp">
+    android:padding="0dp">
 
     <!-- Dashboard / Welcome Section -->
     <LinearLayout
@@ -14,7 +14,6 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:background="#FF6F00"
-        android:layout_marginBottom="12dp"
         android:clipToPadding="false"
         android:elevation="4dp"
         android:paddingTop="24dp"
@@ -25,7 +24,7 @@
             android:id="@+id/textWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to Paobucks!"
+            android:text="@string/welcome_text"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -35,9 +34,9 @@
             android:id="@+id/textIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Discover your favorite coffee and add it to your cart."
+            android:text="@string/discover_text"
             android:textSize="14sp"
-            android:textColor="#FFF3E0"
+            android:textColor="#FFFFFF"
             android:gravity="center" />
     </LinearLayout>
 

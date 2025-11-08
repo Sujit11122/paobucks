@@ -6,22 +6,23 @@
     android:layout_height="match_parent"
     android:background="#FFF8F0">
 
-    <!-- Toolbar with Back Button -->
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarCart"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#FF6F00"
-        app:title="Your Cart"
+        app:title="@string/your_cart"
         app:titleTextColor="@android:color/white"
         app:navigationIcon="@android:drawable/ic_media_previous" />
 
-    <!-- Empty Cart Message (for now) -->
+    <!-- Empty Cart Layout -->
     <LinearLayout
+        android:id="@+id/emptyCartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
+        android:gravity="center"
         android:padding="24dp">
 
         <ImageView
@@ -33,11 +34,52 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your cart is empty!"
+            android:text="@string/empty_cart_message"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:textColor="#333333" />
+            android:textColor="#333333"
+            android:layout_marginTop="12dp" />
+    </LinearLayout>
+
+    <!-- RecyclerView for Cart Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:visibility="gone" />
+
+    <!-- Footer for Total and Pay Now -->
+    <LinearLayout
+        android:id="@+id/footerCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#FFFFFF"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/textTotal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/coffee_price_placeholder"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/buttonPayNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_now"
+            android:textAllCaps="false"
+            android:backgroundTint="#FF6F00"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </LinearLayout>

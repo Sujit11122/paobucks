@@ -1,3 +1,29 @@
 <resources>
+    <!-- App Name -->
     <string name="app_name">Paobucks</string>
+
+    <!-- Home / Dashboard -->
+    <string name="welcome_text">Welcome to Paobucks!</string>
+    <string name="discover_text">Discover your favorite coffee and add it to your cart.</string>
+
+    <!-- Coffee Item Placeholders -->
+    <string name="coffee_name_placeholder">Coffee Name</string>
+    <string name="coffee_description_placeholder">Coffee Description</string>
+    <string name="coffee_price_placeholder">$0.00</string>
+    <string name="pay_now">Pay Now</string>
+
+    <!-- Buttons -->
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="back_button">Back</string>
+
+    <!-- Cart Page -->
+    <string name="your_cart">Your Cart</string>
+    <string name="empty_cart_message">Your cart is empty!</string>
+
+    <!-- Detail Screen Samples -->
+    <string name="sample_coffee_name">Sample Coffee</string>
+    <string name="sample_coffee_description">Rich and aromatic coffee brewed to perfection.</string>
+    <string name="coffee_price_placeholder_format">$%.2f</string>
+    <string name="added_to_cart_message">%1$s added to cart!</string>
+
 </resources>
