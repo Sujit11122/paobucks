@@ -8,10 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CoffeeAdapter(private val coffeeList: List<CoffeeItem>) :
-    RecyclerView.Adapter<CoffeeAdapter.CoffeeViewHolder>() {
+class CartAdapter(
+    private val cartItems: MutableList<CoffeeItem>,
+    private val onCartChanged: () -> Unit
+) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-    inner class CoffeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageCoffee: ImageView = itemView.findViewById(R.id.imageCoffeeCart)
         val nameText: TextView = itemView.findViewById(R.id.textCoffeeNameCart)
         val addOnsText: TextView = itemView.findViewById(R.id.textAddOnsCart)
@@ -19,27 +21,29 @@ class CoffeeAdapter(private val coffeeList: List<CoffeeItem>) :
         val removeBtn: Button = itemView.findViewById(R.id.buttonRemoveCart)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoffeeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_cart, parent, false)
-        return CoffeeViewHolder(view)
+        return CartViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CoffeeViewHolder, position: Int) {
-        val coffee = coffeeList[position]
+    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
+        val coffee = cartItems[position]
         holder.imageCoffee.setImageResource(coffee.imageRes)
         holder.nameText.text = coffee.name
-        val addOnNames = if (coffee.selectedAddOns.isEmpty()) "None"
+        holder.addOnsText.text = "Add-Ons: " + if (coffee.selectedAddOns.isEmpty()) "None"
         else coffee.selectedAddOns.joinToString { it.name }
-        holder.addOnsText.text = "Add-Ons: $addOnNames"
         val totalPrice = coffee.price + coffee.selectedAddOns.sumOf { it.price }
         holder.priceText.text = "$%.2f".format(totalPrice)
+
         holder.removeBtn.setOnClickListener {
             CartManager.removeItem(coffee)
+            cartItems.removeAt(position)
             notifyItemRemoved(position)
-            notifyItemRangeChanged(position, coffeeList.size)
+            notifyItemRangeChanged(position, cartItems.size)
+            onCartChanged()
         }
     }
 
-    override fun getItemCount(): Int = coffeeList.size
+    override fun getItemCount(): Int = cartItems.size
 }

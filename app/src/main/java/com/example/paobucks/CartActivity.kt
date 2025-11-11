@@ -18,51 +18,60 @@ class CartActivity : AppCompatActivity() {
     private lateinit var emptyCartLayout: LinearLayout
     private lateinit var footerCart: LinearLayout
     private lateinit var payNowButton: Button
+    private lateinit var cartAdapter: CartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
+        // Toolbar setup
         val toolbar = findViewById<Toolbar>(R.id.toolbarCart)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
 
+        // View references
         recyclerView = findViewById(R.id.recyclerViewCart)
         textTotal = findViewById(R.id.textTotal)
         emptyCartLayout = findViewById(R.id.emptyCartLayout)
         footerCart = findViewById(R.id.footerCart)
         payNowButton = findViewById(R.id.buttonPayNow)
 
+        // Setup RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Load initial data
+        updateCartUI()
+
+        // Pay Now button
         payNowButton.setOnClickListener {
-            Toast.makeText(this, "Payment feature coming soon!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.payment_coming_soon), Toast.LENGTH_SHORT).show()
         }
-
-        updateCartUI()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateCartUI()
     }
 
     private fun updateCartUI() {
-        val cartItems = CartManager.getCartItems()
+        val cartItems = CartManager.getCartItems().toMutableList()
 
         if (cartItems.isEmpty()) {
+            // Empty cart view
             emptyCartLayout.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
             footerCart.visibility = View.GONE
         } else {
+            // Show cart items
             emptyCartLayout.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
             footerCart.visibility = View.VISIBLE
 
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = CoffeeAdapter(cartItems)
+            cartAdapter = CartAdapter(cartItems) {
+                // Callback when cart changes
+                updateCartUI()
+            }
+
+            recyclerView.adapter = cartAdapter
 
             val total = CartManager.getTotalPrice()
-            textTotal.text = "Total: $%.2f".format(total)
+            textTotal.text = getString(R.string.total_price_format, total)
         }
     }
 }

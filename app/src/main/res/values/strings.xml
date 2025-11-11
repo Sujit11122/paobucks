@@ -11,6 +11,8 @@
     <string name="coffee_description_placeholder">Coffee Description</string>
     <string name="coffee_price_placeholder">$0.00</string>
     <string name="pay_now">Pay Now</string>
+    <string name="payment_coming_soon">Payment feature coming soon!</string>
+    <string name="total_price_format">Total: $%.2f</string>
 
     <!-- Buttons -->
     <string name="add_to_cart">Add to Cart</string>
@@ -19,6 +21,13 @@
     <!-- Cart Page -->
     <string name="your_cart">Your Cart</string>
     <string name="empty_cart_message">Your cart is empty!</string>
+    <string name="coffee_image_desc">Coffee image</string>
+    <string name="cart_coffee_name">Coffee Name</string>
+    <string name="cart_addons_none">Add-Ons: None</string>
+    <string name="cart_price_placeholder">$0.00</string>
+    <string name="cart_remove">Remove</string>
+
+
 
     <!-- Detail Screen Samples -->
     <string name="sample_coffee_name">Sample Coffee</string>
