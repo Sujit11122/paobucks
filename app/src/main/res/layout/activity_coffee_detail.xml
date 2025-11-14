@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Select Add-Ons"
             android:textAllCaps="false"
-            android:backgroundTint="#FFA000"
+            android:backgroundTint="#6F4E37"
             android:textColor="#FFFFFF"
             android:padding="12dp"
             android:elevation="3dp"
@@ -77,10 +77,20 @@
             android:layout_height="wrap_content"
             android:text="Add to Cart"
             android:textAllCaps="false"
-            android:backgroundTint="#FF6F00"
+            android:backgroundTint="#a55c3c"
             android:textColor="#FFFFFF"
             android:padding="12dp"
             android:elevation="3dp"
             android:layout_marginBottom="8dp" />
+
+        <!-- Heart Favorite Button -->
+        <ImageButton
+            android:id="@+id/buttonFavorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_favorite_border"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/favorite_button"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 </ScrollView>

@@ -1,66 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
     android:padding="12dp"
     android:background="#FFFFFF"
     android:elevation="2dp"
     android:layout_marginBottom="8dp">
 
-    <ImageView
-        android:id="@+id/imageCoffeeCart"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
-        android:background="@drawable/image_rounded"
-        android:contentDescription="@string/coffee_image_desc" />
-
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="12dp">
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/imageCoffeeCart"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            android:background="@drawable/image_rounded" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/textCoffeeNameCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coffee Name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#333333" />
+
+            <TextView
+                android:id="@+id/textAddOnsCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add-Ons: None"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textCoffeeNameCart"
+            android:id="@+id/textPriceCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cart_coffee_name"
-            android:textSize="18sp"
+            android:text="$0.00"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#333333" />
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginEnd="8dp" />
 
-        <TextView
-            android:id="@+id/textAddOnsCart"
+        <Button
+            android:id="@+id/buttonRemoveCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cart_addons_none"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:layout_marginTop="2dp" />
+            android:text="Remove"
+            android:textAllCaps="false"
+            android:backgroundTint="#AE0000"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textPriceCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cart_price_placeholder"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/holo_green_dark"
-        android:layout_marginEnd="8dp" />
-
-    <Button
-        android:id="@+id/buttonRemoveCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cart_remove"
-        android:textAllCaps="false"
-        android:backgroundTint="#FF6F00"
-        android:textColor="#FFFFFF" />
-
 </LinearLayout>

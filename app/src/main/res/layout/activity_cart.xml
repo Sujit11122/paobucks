@@ -11,7 +11,7 @@
         android:id="@+id/toolbarCart"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FF6F00"
+        android:background="#6F4E37"
         app:title="@string/your_cart"
         app:titleTextColor="@android:color/white"
         app:navigationIcon="@android:drawable/ic_media_previous" />
@@ -29,7 +29,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_cart"
-            app:tint="#FF6F00" />
+            app:tint="#6F4E37" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="@string/pay_now"
             android:textAllCaps="false"
-            android:backgroundTint="#FF6F00"
+            android:backgroundTint="#6F4E37"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

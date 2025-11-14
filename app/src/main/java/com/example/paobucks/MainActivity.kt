@@ -2,12 +2,6 @@ package com.example.paobucks
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +17,54 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Regular coffee list
         recyclerView = findViewById(R.id.recyclerViewCoffee)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        // --- Pao Specials Section ---
+        val recyclerViewSpecials = findViewById<RecyclerView>(R.id.recyclerViewSpecials)
+        recyclerViewSpecials.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        val specialList = listOf(
+            CoffeeItem("Pao Latte Luxe", "Rich creamy blend with a Pao twist", 5.20, R.drawable.latte),
+            CoffeeItem("Espaosion Shot", "Premium cappuccino with cinnamon dust", 6.50, R.drawable.cappuccino),
+            CoffeeItem("Caramel Paoccino", "Espresso reinvented with caramel", 6.90, R.drawable.espresso)
+        )
+
+        val specialAdapter = CoffeeAdapter(
+            specialList,
+            onAddToCartClick = { coffee ->
+                CartManager.addItem(coffee)
+                Toast.makeText(
+                    this,
+                    getString(R.string.added_to_cart_message, coffee.name),
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            onItemClick = { coffee ->
+                val intent = Intent(this, CoffeeDetailActivity::class.java).apply {
+                    putExtra("name", coffee.name)
+                    putExtra("description", coffee.description)
+                    putExtra("price", coffee.price)
+                    putExtra("imageRes", coffee.imageRes)
+                }
+                startActivity(intent)
+            },
+            onFavoriteClick = { coffee ->
+                if (FavoriteManager.isFavorite(coffee)) {
+                    FavoriteManager.removeFavorite(coffee)
+                    Toast.makeText(this, "${coffee.name} removed from favorites", Toast.LENGTH_SHORT).show()
+                } else {
+                    FavoriteManager.addFavorite(coffee)
+                    Toast.makeText(this, "${coffee.name} added to favorites", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+
+        recyclerViewSpecials.adapter = specialAdapter
+
+        // --- Regular Coffee List ---
         val coffeeList = listOf(
             CoffeeItem("Espresso", "Strong black coffee", 2.50, R.drawable.espresso),
             CoffeeItem("Cappuccino", "Coffee with milk foam", 3.00, R.drawable.cappuccino),
@@ -40,7 +79,11 @@ class MainActivity : AppCompatActivity() {
             coffeeList,
             onAddToCartClick = { coffee ->
                 CartManager.addItem(coffee)
-                Toast.makeText(this, getString(R.string.added_to_cart_message, coffee.name), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.added_to_cart_message, coffee.name),
+                    Toast.LENGTH_SHORT
+                ).show()
             },
             onItemClick = { coffee ->
                 val intent = Intent(this, CoffeeDetailActivity::class.java).apply {
@@ -50,10 +93,20 @@ class MainActivity : AppCompatActivity() {
                     putExtra("imageRes", coffee.imageRes)
                 }
                 startActivity(intent)
+            },
+            onFavoriteClick = { coffee ->
+                if (FavoriteManager.isFavorite(coffee)) {
+                    FavoriteManager.removeFavorite(coffee)
+                    Toast.makeText(this, "${coffee.name} removed from favorites", Toast.LENGTH_SHORT).show()
+                } else {
+                    FavoriteManager.addFavorite(coffee)
+                    Toast.makeText(this, "${coffee.name} added to favorites", Toast.LENGTH_SHORT).show()
+                }
+                coffeeAdapter.notifyDataSetChanged()
             }
         )
-        recyclerView.adapter = coffeeAdapter
 
+        recyclerView.adapter = coffeeAdapter
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.setOnItemSelectedListener { item ->
@@ -63,44 +116,12 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, CartActivity::class.java))
                     true
                 }
+                R.id.nav_favorites -> {
+                    startActivity(Intent(this, FavoriteActivity::class.java))
+                    true
+                }
                 else -> false
             }
         }
-    }
-
-    // CoffeeAdapter
-    class CoffeeAdapter(
-        private val coffeeList: List<CoffeeItem>,
-        private val onAddToCartClick: (CoffeeItem) -> Unit,
-        private val onItemClick: (CoffeeItem) -> Unit
-    ) : RecyclerView.Adapter<CoffeeAdapter.CoffeeViewHolder>() {
-
-        inner class CoffeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val nameText: TextView = itemView.findViewById(R.id.textName)
-            val priceText: TextView = itemView.findViewById(R.id.textPrice)
-            val addButton: Button = itemView.findViewById(R.id.buttonAddToCart)
-            val imageView: ImageView = itemView.findViewById(R.id.imageCoffee)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoffeeViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_coffee, parent, false)
-            return CoffeeViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: CoffeeViewHolder, position: Int) {
-            val coffee = coffeeList[position]
-            holder.nameText.text = coffee.name
-            holder.priceText.text = holder.priceText.context.getString(R.string.coffee_price_placeholder_format, coffee.price)
-            holder.imageView.setImageResource(coffee.imageRes)
-            holder.addButton.setOnClickListener {
-                onAddToCartClick(coffee)
-            }
-            holder.itemView.setOnClickListener {
-                onItemClick(coffee)
-            }
-        }
-
-        override fun getItemCount(): Int = coffeeList.size
     }
 }

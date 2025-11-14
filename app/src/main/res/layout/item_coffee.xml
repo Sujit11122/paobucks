@@ -21,9 +21,8 @@
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
-            android:contentDescription="@string/app_name"
             android:background="@drawable/image_rounded"
-            android:layout_marginEnd="12dp" />
+            android:layout_marginEnd="12dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -73,11 +72,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add to Cart"
-                    android:backgroundTint="#FF6F00"
+                    android:backgroundTint="#a55c3c"
                     android:textColor="#FFFFFF"
                     android:textAllCaps="false"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"/>
+
+                <ImageButton
+                    android:id="@+id/imageFavorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_favorite_border"
+                    android:contentDescription="@string/favorite_button"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

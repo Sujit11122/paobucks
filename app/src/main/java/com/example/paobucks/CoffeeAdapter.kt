@@ -3,41 +3,51 @@ package com.example.paobucks
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
-class CoffeeAdapter(private val coffeeList: List<CoffeeItem>) :
-    RecyclerView.Adapter<CoffeeAdapter.CoffeeViewHolder>() {
+class CoffeeAdapter(
+    private val coffeeList: List<CoffeeItem>,
+    private val onAddToCartClick: (CoffeeItem) -> Unit,
+    private val onItemClick: (CoffeeItem) -> Unit,
+    private val onFavoriteClick: (CoffeeItem) -> Unit
+) : RecyclerView.Adapter<CoffeeAdapter.CoffeeViewHolder>() {
 
     inner class CoffeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageCoffee: ImageView = itemView.findViewById(R.id.imageCoffeeCart)
-        val nameText: TextView = itemView.findViewById(R.id.textCoffeeNameCart)
-        val addOnsText: TextView = itemView.findViewById(R.id.textAddOnsCart)
-        val priceText: TextView = itemView.findViewById(R.id.textPriceCart)
-        val removeBtn: Button = itemView.findViewById(R.id.buttonRemoveCart)
+        val nameText: TextView = itemView.findViewById(R.id.textName)
+        val priceText: TextView = itemView.findViewById(R.id.textPrice)
+        val addButton: Button = itemView.findViewById(R.id.buttonAddToCart)
+        val imageView: ImageView = itemView.findViewById(R.id.imageCoffee)
+        val favoriteBtn: ImageButton = itemView.findViewById(R.id.imageFavorite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoffeeViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_cart, parent, false)
+            .inflate(R.layout.item_coffee, parent, false)
         return CoffeeViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CoffeeViewHolder, position: Int) {
         val coffee = coffeeList[position]
-        holder.imageCoffee.setImageResource(coffee.imageRes)
+
         holder.nameText.text = coffee.name
-        val addOnNames = if (coffee.selectedAddOns.isEmpty()) "None"
-        else coffee.selectedAddOns.joinToString { it.name }
-        holder.addOnsText.text = "Add-Ons: $addOnNames"
-        val totalPrice = coffee.price + coffee.selectedAddOns.sumOf { it.price }
-        holder.priceText.text = "$%.2f".format(totalPrice)
-        holder.removeBtn.setOnClickListener {
-            CartManager.removeItem(coffee)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, coffeeList.size)
+        holder.priceText.text = "$%.2f".format(coffee.price)
+        holder.imageView.setImageResource(coffee.imageRes)
+
+        // Add to Cart
+        holder.addButton.setOnClickListener { onAddToCartClick(coffee) }
+
+        // Open Coffee Detail
+        holder.itemView.setOnClickListener { onItemClick(coffee) }
+
+        // Favorite toggle
+        holder.favoriteBtn.setOnClickListener { onFavoriteClick(coffee) }
+
+        // Update favorite icon
+        if (FavoriteManager.isFavorite(coffee)) {
+            holder.favoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
+        } else {
+            holder.favoriteBtn.setImageResource(R.drawable.ic_favorite_border)
         }
     }
 
