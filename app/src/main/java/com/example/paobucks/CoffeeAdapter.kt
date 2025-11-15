@@ -31,7 +31,7 @@ class CoffeeAdapter(
         val coffee = coffeeList[position]
 
         holder.nameText.text = coffee.name
-        holder.priceText.text = "$%.2f".format(coffee.price)
+        holder.priceText.text = "$%.2f".format(coffee.basePrice)
         holder.imageView.setImageResource(coffee.imageRes)
 
         // Add to Cart

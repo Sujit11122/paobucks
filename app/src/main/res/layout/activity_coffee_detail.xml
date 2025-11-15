@@ -59,23 +59,55 @@
             android:textSize="18sp"
             android:layout_marginBottom="16dp" />
 
+        <!-- SIZE SELECTION -->
+        <RadioGroup
+            android:id="@+id/radioGroupSizes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <RadioButton
+                android:id="@+id/radioSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Small" />
+
+            <RadioButton
+                android:id="@+id/radioMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium"
+                android:layout_marginStart="16dp" />
+
+            <RadioButton
+                android:id="@+id/radioLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Large"
+                android:layout_marginStart="16dp" />
+        </RadioGroup>
+
+        <!-- ADD-ONS BUTTON -->
         <Button
             android:id="@+id/buttonSelectAddOns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Add-Ons"
+            android:text="@string/select_add_ons"
             android:textAllCaps="false"
             android:backgroundTint="#6F4E37"
             android:textColor="#FFFFFF"
             android:padding="12dp"
             android:elevation="3dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="8dp" />
 
+        <!-- ADD TO CART -->
         <Button
             android:id="@+id/buttonAddToCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add to Cart"
+            android:text="@string/add_to_cart"
             android:textAllCaps="false"
             android:backgroundTint="#a55c3c"
             android:textColor="#FFFFFF"
@@ -83,7 +115,7 @@
             android:elevation="3dp"
             android:layout_marginBottom="8dp" />
 
-        <!-- Heart Favorite Button -->
+        <!-- FAVORITE BUTTON -->
         <ImageButton
             android:id="@+id/buttonFavorite"
             android:layout_width="48dp"
@@ -91,6 +123,6 @@
             android:src="@drawable/ic_favorite_border"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/favorite_button"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 </ScrollView>

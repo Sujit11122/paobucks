@@ -33,7 +33,7 @@ class FavoriteAdapter(
         holder.nameText.text = coffee.name
         holder.addOnsText.text = if (coffee.selectedAddOns.isEmpty()) "Add-Ons: None"
         else "Add-Ons: ${coffee.selectedAddOns.joinToString { it.name }}"
-        holder.priceText.text = "$%.2f".format(coffee.price)
+        holder.priceText.text = "$%.2f".format(coffee.basePrice)
 
         holder.removeBtn.text = "Remove"
         holder.removeBtn.setOnClickListener {

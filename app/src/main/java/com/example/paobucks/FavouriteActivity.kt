@@ -50,7 +50,7 @@ class FavoriteActivity : AppCompatActivity() {
                     val intent = Intent(this, CoffeeDetailActivity::class.java).apply {
                         putExtra("name", coffee.name)
                         putExtra("description", coffee.description)
-                        putExtra("price", coffee.price)
+                        putExtra("price", coffee.basePrice)
                         putExtra("imageRes", coffee.imageRes)
                     }
                     startActivity(intent)

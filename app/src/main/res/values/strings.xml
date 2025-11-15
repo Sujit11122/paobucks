@@ -34,7 +34,6 @@
     <string name="favorites_title">Favorites</string>
     <string name="no_favorites">No favorites yet!</string>
 
-
     <!-- Detail Screen Samples -->
     <string name="sample_coffee_name">Sample Coffee</string>
     <string name="sample_coffee_description">Rich and aromatic coffee brewed to perfection.</string>
@@ -42,4 +41,8 @@
     <string name="added_to_cart_message">%1$s added to cart!</string>
     <string name="added_to_favorites_message">%1$s added to favorites!</string>
     <string name="removed_from_favorites_message">%1$s removed from favorites!</string>
+    <string name="select_add_ons">Select Add-Ons</string>
+    <string name="sample_coffee_size">Size: Medium</string>
+    <string name="sample_addons_placeholder">Add-Ons: None</string>
+    <string name="remove_button">Remove</string>
 </resources>

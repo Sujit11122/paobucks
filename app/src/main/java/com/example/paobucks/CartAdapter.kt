@@ -16,6 +16,7 @@ class CartAdapter(
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageCoffee: ImageView = itemView.findViewById(R.id.imageCoffeeCart)
         val nameText: TextView = itemView.findViewById(R.id.textCoffeeNameCart)
+        val sizeText: TextView = itemView.findViewById(R.id.textSizeCart)
         val addOnsText: TextView = itemView.findViewById(R.id.textAddOnsCart)
         val priceText: TextView = itemView.findViewById(R.id.textPriceCart)
         val removeBtn: Button = itemView.findViewById(R.id.buttonRemoveCart)
@@ -29,13 +30,23 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val coffee = cartItems[position]
+
         holder.imageCoffee.setImageResource(coffee.imageRes)
         holder.nameText.text = coffee.name
-        holder.addOnsText.text = "Add-Ons: " + if (coffee.selectedAddOns.isEmpty()) "None"
-        else coffee.selectedAddOns.joinToString { it.name }
-        val totalPrice = coffee.price + coffee.selectedAddOns.sumOf { it.price }
-        holder.priceText.text = "$%.2f".format(totalPrice)
+        holder.sizeText.text = "Size: ${coffee.size}"
 
+        // Add-ons
+        holder.addOnsText.text =
+            if (coffee.selectedAddOns.isEmpty()) "Add-Ons: None"
+            else "Add-Ons: ${coffee.selectedAddOns.joinToString { it.name }}"
+
+        // PRICE CALCULATION with size multiplier
+        val base = coffee.basePrice * coffee.sizeMultiplier
+        val addOns = coffee.selectedAddOns.sumOf { it.price }
+        val total = base + addOns
+        holder.priceText.text = "$%.2f".format(total)
+
+        // Remove item
         holder.removeBtn.setOnClickListener {
             CartManager.removeItem(coffee)
             cartItems.removeAt(position)

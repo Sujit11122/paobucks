@@ -13,21 +13,35 @@ class CoffeeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coffee_detail)
 
+        // Intent data
         val name = intent.getStringExtra("name") ?: getString(R.string.sample_coffee_name)
         val description = intent.getStringExtra("description") ?: getString(R.string.sample_coffee_description)
-        val price = intent.getDoubleExtra("price", 0.0)
+        val basePrice = intent.getDoubleExtra("price", 0.0)
         val imageRes = intent.getIntExtra("imageRes", R.drawable.ic_launcher_background)
 
-        findViewById<ImageView>(R.id.imageCoffeeDetail).setImageResource(imageRes)
-        findViewById<TextView>(R.id.textNameDetail).text = name
-        findViewById<TextView>(R.id.textDescriptionDetail).text = description
-        findViewById<TextView>(R.id.textPriceDetail).text =
-            getString(R.string.coffee_price_placeholder_format, price)
-
+        // UI references
+        val imageView = findViewById<ImageView>(R.id.imageCoffeeDetail)
+        val textName = findViewById<TextView>(R.id.textNameDetail)
+        val textDescription = findViewById<TextView>(R.id.textDescriptionDetail)
+        val textPrice = findViewById<TextView>(R.id.textPriceDetail)
         val favoriteBtn = findViewById<ImageButton>(R.id.buttonFavorite)
+        val buttonAddOns = findViewById<Button>(R.id.buttonSelectAddOns)
+        val buttonAddToCart = findViewById<Button>(R.id.buttonAddToCart)
+        val buttonBack = findViewById<ImageButton>(R.id.buttonBack)
 
+        val radioSmall = findViewById<RadioButton>(R.id.radioSmall)
+        val radioMedium = findViewById<RadioButton>(R.id.radioMedium)
+        val radioLarge = findViewById<RadioButton>(R.id.radioLarge)
+
+        // Set initial UI
+        imageView.setImageResource(imageRes)
+        textName.text = name
+        textDescription.text = description
+        updatePrice(basePrice, textPrice) // Initial price display
+
+        // Favorite handling
         fun updateFavoriteIcon() {
-            val coffee = CoffeeItem(name, description, price, imageRes)
+            val coffee = CoffeeItem(name, description, basePrice, imageRes)
             if (FavoriteManager.isFavorite(coffee)) {
                 favoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
             } else {
@@ -38,7 +52,7 @@ class CoffeeDetailActivity : AppCompatActivity() {
         updateFavoriteIcon()
 
         favoriteBtn.setOnClickListener {
-            val coffee = CoffeeItem(name, description, price, imageRes)
+            val coffee = CoffeeItem(name, description, basePrice, imageRes)
             if (FavoriteManager.isFavorite(coffee)) {
                 FavoriteManager.removeFavorite(coffee)
                 Toast.makeText(this, "$name removed from favorites", Toast.LENGTH_SHORT).show()
@@ -49,22 +63,66 @@ class CoffeeDetailActivity : AppCompatActivity() {
             updateFavoriteIcon()
         }
 
-        findViewById<Button>(R.id.buttonSelectAddOns).setOnClickListener {
-            showAddOnDialog()
-        }
+        // Add-ons button
+        buttonAddOns.setOnClickListener { showAddOnDialog(basePrice, textPrice) }
 
-        findViewById<Button>(R.id.buttonAddToCart).setOnClickListener {
-            val coffee = CoffeeItem(name, description, price, imageRes, selectedAddOns.toList())
+        // Size change listener: update price dynamically
+        val sizeChangeListener = { _: CompoundButton, _: Boolean -> updatePrice(basePrice, textPrice) }
+        radioSmall.setOnCheckedChangeListener(sizeChangeListener)
+        radioMedium.setOnCheckedChangeListener(sizeChangeListener)
+        radioLarge.setOnCheckedChangeListener(sizeChangeListener)
+
+        // Add to cart button
+        buttonAddToCart.setOnClickListener {
+
+            val (size, multiplier) = when {
+                radioSmall.isChecked -> "Small" to 0.8
+                radioLarge.isChecked -> "Large" to 1.2
+                else -> "Medium" to 1.0
+            }
+
+            val coffee = CoffeeItem(
+                name = name,
+                description = description,
+                basePrice = basePrice,
+                imageRes = imageRes,
+                selectedAddOns = selectedAddOns.toMutableList(),
+                size = size,
+                sizeMultiplier = multiplier
+            )
+
             CartManager.addItem(coffee)
-            Toast.makeText(this, getString(R.string.added_to_cart_message, name), Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(
+                this,
+                getString(R.string.added_to_cart_message, name),
+                Toast.LENGTH_SHORT
+            ).show()
+
             finish()
         }
 
-        findViewById<ImageButton>(R.id.buttonBack).setOnClickListener { finish() }
+        // Back button
+        buttonBack.setOnClickListener { finish() }
     }
 
-    private fun showAddOnDialog() {
+    // Update the displayed price based on size and add-ons
+    private fun updatePrice(basePrice: Double, priceTextView: TextView) {
+        val multiplier = when {
+            findViewById<RadioButton>(R.id.radioSmall).isChecked -> 0.8
+            findViewById<RadioButton>(R.id.radioLarge).isChecked -> 1.2
+            else -> 1.0
+        }
+
+        val addOnsTotal = selectedAddOns.sumOf { it.price }
+        val finalPrice = basePrice * multiplier + addOnsTotal
+        priceTextView.text = "$${"%.2f".format(finalPrice)}"
+    }
+
+    // Add-ons selection dialog
+    private fun showAddOnDialog(basePrice: Double, priceTextView: TextView) {
         val addOnNames = AddOnProvider.availableAddOns.map { it.name }.toTypedArray()
+
         val checkedItems = BooleanArray(addOnNames.size) { index ->
             selectedAddOns.contains(AddOnProvider.availableAddOns[index])
         }
@@ -73,7 +131,11 @@ class CoffeeDetailActivity : AppCompatActivity() {
             .setTitle("Select Add-Ons")
             .setMultiChoiceItems(addOnNames, checkedItems) { _, which, isChecked ->
                 val addOn = AddOnProvider.availableAddOns[which]
-                if (isChecked) selectedAddOns.add(addOn) else selectedAddOns.remove(addOn)
+                if (isChecked && !selectedAddOns.contains(addOn)) selectedAddOns.add(addOn)
+                else selectedAddOns.remove(addOn)
+
+                // Update price dynamically
+                updatePrice(basePrice, priceTextView)
             }
             .setPositiveButton("Done", null)
             .show()

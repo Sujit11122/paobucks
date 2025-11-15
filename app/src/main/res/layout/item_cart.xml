@@ -20,7 +20,8 @@
             android:layout_height="60dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
-            android:background="@drawable/image_rounded" />
+            android:background="@drawable/image_rounded"
+            android:contentDescription="@string/app_name" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,16 +34,26 @@
                 android:id="@+id/textCoffeeNameCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coffee Name"
+                android:text="@string/sample_coffee_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#333333" />
+
+            <!-- NEW SIZE LABEL -->
+            <TextView
+                android:id="@+id/textSizeCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_coffee_size"
+                android:textSize="14sp"
+                android:textColor="#444444"
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:id="@+id/textAddOnsCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add-Ons: None"
+                android:text="@string/sample_addons_placeholder"
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:layout_marginTop="2dp" />
@@ -52,7 +63,7 @@
             android:id="@+id/textPriceCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$0.00"
+            android:text="@string/coffee_price_placeholder"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/holo_green_dark"
@@ -62,7 +73,7 @@
             android:id="@+id/buttonRemoveCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remove"
+            android:text="@string/remove_button"
             android:textAllCaps="false"
             android:backgroundTint="#AE0000"
             android:textColor="#FFFFFF" />
