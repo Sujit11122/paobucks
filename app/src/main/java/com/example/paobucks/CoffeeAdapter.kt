@@ -34,21 +34,14 @@ class CoffeeAdapter(
         holder.priceText.text = "$%.2f".format(coffee.basePrice)
         holder.imageView.setImageResource(coffee.imageRes)
 
-        // Add to Cart
         holder.addButton.setOnClickListener { onAddToCartClick(coffee) }
-
-        // Open Coffee Detail
         holder.itemView.setOnClickListener { onItemClick(coffee) }
-
-        // Favorite toggle
         holder.favoriteBtn.setOnClickListener { onFavoriteClick(coffee) }
 
-        // Update favorite icon
-        if (FavoriteManager.isFavorite(coffee)) {
-            holder.favoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
-        } else {
-            holder.favoriteBtn.setImageResource(R.drawable.ic_favorite_border)
-        }
+        holder.favoriteBtn.setImageResource(
+            if (coffee.isFavorite) R.drawable.ic_favorite_filled
+            else R.drawable.ic_favorite_border
+        )
     }
 
     override fun getItemCount(): Int = coffeeList.size

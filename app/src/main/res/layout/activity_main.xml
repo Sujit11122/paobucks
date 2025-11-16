@@ -65,7 +65,7 @@
         android:id="@+id/textCoffe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Regulaar Items"
+        android:text="Regular Items"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#A0522D"

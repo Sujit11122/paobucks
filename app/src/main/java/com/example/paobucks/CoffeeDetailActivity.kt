@@ -33,7 +33,7 @@ class CoffeeDetailActivity : AppCompatActivity() {
         val radioMedium = findViewById<RadioButton>(R.id.radioMedium)
         val radioLarge = findViewById<RadioButton>(R.id.radioLarge)
 
-        // Set initial UI
+        // initial UI
         imageView.setImageResource(imageRes)
         textName.text = name
         textDescription.text = description
@@ -66,7 +66,7 @@ class CoffeeDetailActivity : AppCompatActivity() {
         // Add-ons button
         buttonAddOns.setOnClickListener { showAddOnDialog(basePrice, textPrice) }
 
-        // Size change listener: update price dynamically
+        // Size change listener: update price
         val sizeChangeListener = { _: CompoundButton, _: Boolean -> updatePrice(basePrice, textPrice) }
         radioSmall.setOnCheckedChangeListener(sizeChangeListener)
         radioMedium.setOnCheckedChangeListener(sizeChangeListener)
@@ -119,7 +119,7 @@ class CoffeeDetailActivity : AppCompatActivity() {
         priceTextView.text = "$${"%.2f".format(finalPrice)}"
     }
 
-    // Add-ons selection dialog
+    // Add-ons selection
     private fun showAddOnDialog(basePrice: Double, priceTextView: TextView) {
         val addOnNames = AddOnProvider.availableAddOns.map { it.name }.toTypedArray()
 
@@ -134,7 +134,7 @@ class CoffeeDetailActivity : AppCompatActivity() {
                 if (isChecked && !selectedAddOns.contains(addOn)) selectedAddOns.add(addOn)
                 else selectedAddOns.remove(addOn)
 
-                // Update price dynamically
+                // Update price
                 updatePrice(basePrice, priceTextView)
             }
             .setPositiveButton("Done", null)
